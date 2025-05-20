@@ -34,7 +34,7 @@ Honoraires_new_mission <- function(groupement = NULL, date_debut, date_fin) {
     SELECT
       n_auto_adhpha_B2 AS n_auto_adhpha,
       os_acteb2.acteB2 AS honoraires,
-      COUNT(qt_vendu_B2) AS Volume
+      sum(qt_vendu_B2) AS Volume
     FROM os_acteb2
     LEFT JOIN dbo.os_stat_B2 ON os_stat_B2.acteB2 = os_acteb2.acteb2
     WHERE %s
