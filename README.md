@@ -53,3 +53,23 @@ library(ospharm2)
 # Fréquentation moyenne de la pharmacie 123456 entre janvier et avril 2024
 frequentation_journaliere(n_auto = 123456, date_debut = 202401, date_fin = 202404)
 ```
+
+##--------------------Exemple : informations sur les pharmacies -----------------------
+
+La fonction `pharmacies_infos()` permet de récupérer les **informations détaillées** des pharmacies,
+avec ou sans filtrage par **groupement**.
+
+Par défaut, elle renvoie **toutes les pharmacies actives**.  
+Tu peux lui passer un identifiant de groupement pour filtrer.
+
+#### Exemple d'utilisation :
+
+```r
+library(ospharm2)
+
+# Toutes les pharmacies
+pharmacies_infos()
+
+# Pharmacies du groupement 164
+pharmacies_infos(164)
+```
