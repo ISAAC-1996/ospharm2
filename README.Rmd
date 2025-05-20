@@ -6,9 +6,29 @@ output: github_document
 
 # ospharm2
 
-`ospharm2` est un package R destiné à **automatiser les requêtes SQL utilisées dans les études pharmaceutiques**.  
-L’objectif est de **faciliter les analyses répétées** sans avoir à réécrire manuellement les requêtes SQL,  
-ce qui permet de gagner du temps, de réduire les erreurs et de limiter la dépendance à la maîtrise du SQL.
+================
+
+# ospharm2
+
+`ospharm2` est un package R développé pour **automatiser les analyses pharmaceutiques**, notamment en lien avec les bases SQL utilisées dans les études commerciales ou médicales.
+
+Il offre :
+
+- Des fonctions intelligentes pour générer des requêtes SQL automatiquement
+- Des outils pour visualiser, agréger et croiser les données de ventes, honoraires ou activité
+- Une intégration fluide avec `plotly`, `shiny`, `leaflet`, `openxlsx` et d'autres packages essentiels
+- Un focus sur les données de pharmacies, groupements, missions, et produits
+
+Le but est de **gagner du temps**, **réduire la dépendance aux requêtes manuelles** et **favoriser les études reproductibles** dans l’environnement pharmaceutique.
+
+---
+
+## Chargement automatique des librairies : sf, leaflet, shiny, DT, DBI, odbc, openxlsx, plotly, tidyverse, gganimate, ggforce, lubridate, readxl, httr, mailR, jsonlite, xgboost, future, furrr,
+leaflet.extras2, shinyjs, networkD3, htmltools, htmlwidgets, reshape2,
+gridExtra, geosphere, taskscheduleR, writexl
+
+
+Quand vous faites : library(ospharm2)
 
 ---
 

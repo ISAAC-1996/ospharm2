@@ -1,13 +1,43 @@
 Package: ospharm2
-Title: What the Package Does (One Line, Title Case)
+Title: Analyse automatisée des données pharmaceutiques
 Version: 0.0.0.9000
-Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+Authors@R:
+    person("Isaac", "Amabile", email = "amabileisaac@gmail.com", role = c("aut", "cre"))
+Description: Package R pour automatiser les requêtes SQL et visualiser les données pharmaceutiques.
+License: MIT
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
+Imports:
+    sf,
+    leaflet,
+    leaflet.extras2,
+    shiny,
+    shinyjs,
+    DT,
+    DBI,
+    odbc,
+    openxlsx,
+    networkD3,
+    htmlwidgets,
+    htmltools,
+    plotly,
+    ggplot2,
+    gganimate,
+    ggforce,
+    lubridate,
+    readxl,
+    reshape2,
+    gridExtra,
+    geosphere,
+    taskscheduleR,
+    writexl,
+    httr,
+    mailR,
+    jsonlite,
+    tidyverse,
+    xgboost,
+    future,
+    furrr
 URL: https://github.com/ISAAC-1996/ospharm2
 BugReports: https://github.com/ISAAC-1996/ospharm2/issues
