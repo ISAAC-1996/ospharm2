@@ -7,7 +7,7 @@
     "DBI", "odbc", "openxlsx", "networkD3", "htmlwidgets", "htmltools",
     "plotly", "ggplot2", "gganimate", "ggforce", "lubridate", "readxl",
     "reshape2", "gridExtra", "geosphere", "taskscheduleR", "writexl",
-    "httr", "mailR", "jsonlite", "tidyverse", "xgboost", "future", "furrr"
+    "httr", "mailR", "jsonlite", "tidyverse", "xgboost", "future", "furrr", "igraph", "ggraph", "tidygraph"
   )
 
   missing <- required_packages[!sapply(required_packages, requireNamespace, quietly = TRUE)]

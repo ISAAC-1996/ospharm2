@@ -38,6 +38,9 @@ Imports:
     tidyverse,
     xgboost,
     future,
-    furrr
+    furrr, 
+    igraph,
+    ggraph,
+    tidygraph
 URL: https://github.com/ISAAC-1996/ospharm2
 BugReports: https://github.com/ISAAC-1996/ospharm2/issues
