@@ -1,0 +1,23 @@
+
+# ospharm2
+
+`ospharm2` est un package R destiné à **automatiser les requêtes SQL
+utilisées dans les études pharmaceutiques**.  
+L’objectif est de **faciliter les analyses répétées** sans avoir à
+réécrire manuellement les requêtes SQL,  
+ce qui permet de gagner du temps, de réduire les erreurs et de limiter
+la dépendance à la maîtrise du SQL.
+
+------------------------------------------------------------------------
+
+## 🚀 Installation
+
+Pour installer la version de développement depuis GitHub :
+
+``` r
+# Si ce n’est pas encore fait
+install.packages("devtools")
+
+# Installer depuis GitHub
+devtools::install_github("ISAAC-1996/ospharm2")
+```
