@@ -1,3 +1,9 @@
+---
+title: "ospharm2"
+output: github_document
+---
+
+
 # ospharm2
 
 `ospharm2` est un package R destiné à **automatiser les requêtes SQL utilisées dans les études pharmaceutiques**.  
@@ -62,6 +68,8 @@ avec ou sans filtrage par **groupement**.
 Par défaut, elle renvoie **toutes les pharmacies actives**.  
 Tu peux lui passer un identifiant de groupement pour filtrer.
 
+
+
 #### Exemple d'utilisation :
 
 ```r
@@ -72,4 +80,31 @@ pharmacies_infos()
 
 # Pharmacies du groupement 164
 pharma
+```
+
+##------------------------ honoraires de nouvelles missions -------------------------
+La fonction `Honoraires_new_mission()` permet de générer un tableau synthétique des **honoraires B2** (nouvelles missions) réalisés par les pharmacies sur une période définie.
+
+Par défaut, la fonction renvoie les honoraires pour **toutes les pharmacies actives**.  
+Si un identifiant de **groupement** est fourni, elle filtre les résultats pour ne montrer que les pharmacies appartenant à ce groupement.
+
+#### 🔎 Points clés :
+- Les actes suivants sont **exclus** automatiquement : `'HD'`, `'HG'`, `'HC'`, `'HDA'`, `'HDE'`, `'HDR'`
+- Le tableau est **pivoté** : chaque ligne correspond à une pharmacie et chaque colonne à un type d’honoraire
+- Les volumes sont **agrégés** (total des actes réalisés)
+
+#### 📘 Exemple d'utilisation :
+
+```r
+library(ospharm2)
+
+# Honoraires pour toutes les pharmacies entre janvier et avril 2024
+Honoraires_new_mission(date_debut = 202401, date_fin = 202404)
+
+# Honoraires pour les pharmacies du groupement 411
+Honoraires_new_mission(groupement = 411, date_debut = 202401, date_fin = 202404)
+```
+
+
+
 
