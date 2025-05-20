@@ -39,3 +39,18 @@ pharma_complete_12()
 # Pour l’année N-2
 pharma_complete_12(n = 1)
 ```
+##----------------------- fréquentation journalière moyenne ------------------------
+
+La fonction `frequentation_journaliere()` permet de calculer la **fréquentation moyenne par jour** d’une pharmacie donnée sur une période personnalisée.
+
+Cette fréquentation est calculée à partir des données de `v_el_collect_ospharm`, en comptant les clients uniques par jour sur la période indiquée.
+
+#### Exemple d'utilisation :
+
+```r
+library(ospharm2)
+
+# Fréquentation moyenne de la pharmacie 123456 entre janvier et avril 2024
+frequentation_journaliere(n_auto = 123456, date_debut = 202401, date_fin = 202404)
+```
+
