@@ -11,10 +11,10 @@ executer_sql(query, params = NULL, database = "OSP_DATASTAT")
 
 \item{params}{Liste optionnelle de paramètres pour les requêtes paramétrées}
 
-\item{database}{Nom de la base de données (par défaut: "OSP_DATASTAT")}
+\item{database}{Nom de la base de données (par défaut : "OSP_DATASTAT")}
 }
 \value{
-Résultat de la requête (data frame)
+Un objet \code{data.frame} contenant les résultats de la requête.
 }
 \description{
 Cette fonction permet d'exécuter facilement une requête SQL sur la base de données
@@ -22,6 +22,11 @@ en établissant automatiquement la connexion.
 }
 \examples{
 \dontrun{
-resultats <- executer_sql("SELECT * FROM ma_table WHERE id < ?", params = list(100))
+# Exemple simple sans paramètres
+executer_sql("SELECT * FROM produits")
+
+# Exemple avec un paramètre
+executer_sql("SELECT * FROM clients WHERE id = ?", params = list(100))
 }
+
 }
