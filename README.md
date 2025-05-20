@@ -24,7 +24,7 @@ install.packages("devtools")
 devtools::install_github("ISAAC-1996/ospharm2")
 ```
 
-\##——————- pharma_complete_12() —————————- La fonction
+##——————- pharma_complete_12() —————————- La fonction
 `pharma_complete_12()` permet de récupérer la liste des **pharmacies
 complètes** sur les 12 mois d’une année donnée, ainsi que leur **chiffre
 d’affaires total**.
@@ -119,3 +119,39 @@ Honoraires_new_mission(date_debut = 202401, date_fin = 202404)
 # Honoraires pour les pharmacies du groupement 411
 Honoraires_new_mission(groupement = 411, date_debut = 202401, date_fin = 202404)
 ```
+
+##------------------ Classement des produits les plus vendus --------------------------------
+
+La fonction `top_ventes_produits()` permet d’obtenir un **classement des produits les plus vendus** (en quantité) sur une période donnée.
+
+Elle accepte plusieurs filtres facultatifs :
+- `region` : restreint aux pharmacies d’une région précise
+- `marque` : sélectionne uniquement les produits d’une marque
+- `n_auto_adhpha_artic` : identifiant précis d’une pharmacie
+- `date_debut`, `date_fin` (obligatoires) : période d’étude
+- `top_n` : nombre de produits à retourner (défaut = 20)
+
+Si un filtre n’est **pas précisé**, la fonction considère **toutes les valeurs possibles** pour ce critère.
+
+#### 📘 Exemple 1 : top 30 des produits "avril" en région 1
+```r
+#TOP 30 des produit vendus des pharmacie sur periode definit et de la region 1(BRETAGNE)
+top_ventes_produits(region = 1,
+                    marque = "avril",
+                    date_debut = 202401,
+                    date_fin = 202412,
+                    top_n = 30)
+ 
+#TOP 10 des produit vendus d'une pharmacie sur periode definit                   
+top_ventes_produits(n_auto_adhpha_artic = 7722,
+                    date_debut = 202401,
+                    date_fin = 202412,
+                    top_n = 10)
+                    
+#TOP 20 tous produits vendus au niveau de national (trop lourd)
+top_ventes_produits(date_debut = 202401,
+                    date_fin = 202412)
+  ```                  
+                    
+        
+
