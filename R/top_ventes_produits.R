@@ -58,6 +58,7 @@ top_ventes_produits <- function(region = NULL, marque = NULL, n_auto_adhpha_arti
     SELECT TOP %d
       code_ean AS EAN,
       nom_artic AS Produit,
+      nom_adhfour,
       n_auto_famille,
       lib_famille,
       SUM(qt_vendu_artic) AS [Quantité vendue],
@@ -66,12 +67,13 @@ top_ventes_produits <- function(region = NULL, marque = NULL, n_auto_adhpha_arti
     LEFT JOIN os_artic ON n_auto_artic_artic = n_auto_artic
     LEFT JOIN os_ean ON n_auto_artic = n_auto_artic_ean
     LEFT JOIN os_classif ON n_auto_artic_artic = os_classif.n_auto_artic
+    LEFT JOIN os_adhfour on adhfour = n_auto_adhfour
     WHERE type_code = 1
       AND periode BETWEEN %d AND %d
       %s
       %s
       %s
-    GROUP BY code_ean, nom_artic, n_auto_famille, lib_famille
+    GROUP BY code_ean, nom_artic, nom_adhfour,  n_auto_famille, lib_famille
     ORDER BY [Quantité vendue] DESC
   ",
                      top_n, date_debut, date_fin,
