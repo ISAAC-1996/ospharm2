@@ -3,30 +3,45 @@
 #' La fonction `refresh_ospharm_network()` génère un réseau interactif des fonctions exportées du package `ospharm2`, en les reliant à un nœud central nommé "OSPHARM".
 #' Elle inclut une interface web enrichie avec champ de recherche autocomplete, survol, clic, et affichage dynamique de la documentation de chaque fonction si disponible.
 #'
-#' Un panneau latéral s’affiche à droite avec la documentation des fonctions, extraite depuis des fichiers `.txt` stockés dans le dossier local `doc/`, portant le nom exact de chaque fonction.
+#' Un panneau latéral s'affiche à droite avec la documentation des fonctions, extraite depuis des fichiers `.txt` stockés dans le dossier local `doc/`, portant le nom exact de chaque fonction.
 #'
 #' Chaque fonction possède désormais un groupe unique, permettant une meilleure différenciation visuelle dans le graphe.
 #'
 #' Le fichier HTML résultant (`ospharm_network.html`) est autoportant et peut être ouvert directement dans un navigateur.
 #'
+#' @param exclude_functions Vecteur de caractères contenant les noms des fonctions à exclure du graphique.
+#'
 #' @details
 #' - Les fichiers de documentation doivent être présents dans un dossier `doc/`, avec un fichier par fonction (ex : `doc/ma_fonction.txt`).
 #' - Le champ de recherche suggère automatiquement les fonctions selon la saisie utilisateur.
-#' - Un clic sur un nœud ou une sélection depuis le champ de recherche déclenche la mise en évidence du nœud et l’affichage de sa documentation.
+#' - Un clic sur un nœud ou une sélection depuis le champ de recherche déclenche la mise en évidence du nœud et l'affichage de sa documentation.
 #'
 #' @return Un objet `htmlwidget` affichant le réseau interactif dans RStudio ou un navigateur.
 #' @export
 #'
 #' @examples
 #' \dontrun{
+#' # Afficher toutes les fonctions
 #' refresh_ospharm_network()
+#'
+#' # Exclure certaines fonctions
+#' refresh_ospharm_network(exclude_functions = c("fonction_a_cacher", "autre_fonction"))
+#'
 #' # Ouvre le fichier "ospharm_network.html" dans un navigateur
 #' }
-refresh_ospharm_network <- function() {
+refresh_ospharm_network <- function(exclude_functions = NULL) {
   library(networkD3)
   library(htmlwidgets)
   library(ospharm2)
+
+  # Récupérer toutes les fonctions exportées
   fonctions <- getNamespaceExports("ospharm2")
+
+  # Filtrer les fonctions à exclure si spécifiées
+  if (!is.null(exclude_functions)) {
+    fonctions <- fonctions[!fonctions %in% exclude_functions]
+  }
+
   doc_dir <- "doc"
   descriptions <- sapply(fonctions, function(f) {
     path <- file.path(doc_dir, paste0(f, ".txt"))

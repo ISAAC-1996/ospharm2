@@ -4,7 +4,10 @@
 \alias{refresh_ospharm_network}
 \title{Visualisation interactive des fonctions du package ospharm2 avec recherche intelligente}
 \usage{
-refresh_ospharm_network()
+refresh_ospharm_network(exclude_functions = NULL)
+}
+\arguments{
+\item{exclude_functions}{Vecteur de caractères contenant les noms des fonctions à exclure du graphique.}
 }
 \value{
 Un objet \code{htmlwidget} affichant le réseau interactif dans RStudio ou un navigateur.
@@ -14,7 +17,7 @@ La fonction \code{refresh_ospharm_network()} génère un réseau interactif des 
 Elle inclut une interface web enrichie avec champ de recherche autocomplete, survol, clic, et affichage dynamique de la documentation de chaque fonction si disponible.
 }
 \details{
-Un panneau latéral s’affiche à droite avec la documentation des fonctions, extraite depuis des fichiers \code{.txt} stockés dans le dossier local \verb{doc/}, portant le nom exact de chaque fonction.
+Un panneau latéral s'affiche à droite avec la documentation des fonctions, extraite depuis des fichiers \code{.txt} stockés dans le dossier local \verb{doc/}, portant le nom exact de chaque fonction.
 
 Chaque fonction possède désormais un groupe unique, permettant une meilleure différenciation visuelle dans le graphe.
 
@@ -22,12 +25,17 @@ Le fichier HTML résultant (\code{ospharm_network.html}) est autoportant et peut
 \itemize{
 \item Les fichiers de documentation doivent être présents dans un dossier \verb{doc/}, avec un fichier par fonction (ex : \code{doc/ma_fonction.txt}).
 \item Le champ de recherche suggère automatiquement les fonctions selon la saisie utilisateur.
-\item Un clic sur un nœud ou une sélection depuis le champ de recherche déclenche la mise en évidence du nœud et l’affichage de sa documentation.
+\item Un clic sur un nœud ou une sélection depuis le champ de recherche déclenche la mise en évidence du nœud et l'affichage de sa documentation.
 }
 }
 \examples{
 \dontrun{
+# Afficher toutes les fonctions
 refresh_ospharm_network()
+
+# Exclure certaines fonctions
+refresh_ospharm_network(exclude_functions = c("fonction_a_cacher", "autre_fonction"))
+
 # Ouvre le fichier "ospharm_network.html" dans un navigateur
 }
 }
