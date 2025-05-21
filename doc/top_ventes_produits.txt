@@ -1,0 +1,52 @@
+
+#-------------Fonction top_ventes_produits() ----------------------
+
+Cette fonction retourne un classement des produits les plus vendus en quantités, avec la possibilité de filtrer par pharmacie, région, marque, et période.
+
+##Usage
+
+top_ventes_produits(region = NULL, marque = NULL,
+  n_auto_adhpha_artic = NULL,
+  date_debut,
+  date_fin,
+  top_n = 20)
+
+##Arguments
+
+- region : Entier (optionnel). Code de région (ex: 1)
+- marque : Chaîne (optionnelle). Marque produit (ex: "avril")
+- n_auto_adhpha_artic :	Entier (optionnel). Identifiant de la pharmacie
+- date_debut : Entier. Période de début (format YYYYMM, ex: 202401)
+- date_fin : Entier. Période de fin (format YYYYMM, ex: 202412)
+- top_n	: Entier. Nombre de lignes à retourner (défaut = 20)
+
+##Résultat
+
+Un data.frame avec EAN, nom produit, code famille, famille, marque, quantité vendue et CA
+
+##Exemples
+# Classement pour une pharmacie spécifique (renvoie par defaut les top 20)
+top_ventes_produits(n_auto_adhpha_artic = 7722, date_debut = 202401, date_fin = 202412)
+
+# Top 30 pour la marque "avril" en région 1
+top_ventes_produits(region = 1, marque = "avril", date_debut = 202401, date_fin = 202412, top_n = 30)
+
+# Classement global (toutes régions / toutes pharmacies)
+top_ventes_produits(date_debut = 202401, date_fin = 202412)
+
+##Requête SQL
+
+select top 30 code_ean as EAN, nom_artic as 'Produit',  nom_adhfour,
+n_auto_famille, lib_famille,
+sum(qt_vendu_artic) as 'Quantité vendue',
+round(sum(ca_ht_artic), 2) as CA
+from os_stat_artic
+	left join os_artic on n_auto_artic_artic = n_auto_artic
+	left join os_ean on n_auto_artic = n_auto_artic_ean
+        left join dbo.os_classif on n_auto_artic_artic = os_classif.n_auto_artic
+		left join os_adhfour on adhfour = n_auto_adhfour
+	where n_auto_artic_artic in (select n_auto_artic from os_classif where marque like 'avril%') and periode between 202401 and 202412
+	and n_auto_adhpha_artic in (select n_auto_adhpha from os_adhpha where region_adhpha = 1) and type_code = 1-- Pour l'acutalisation  du code EAN
+        --and n_auto_adhpha_artic = 7782
+group by code_ean, nom_artic, nom_adhfour, n_auto_famille, lib_famille
+order by 'Quantité vendue' desc

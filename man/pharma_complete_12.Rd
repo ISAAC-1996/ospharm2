@@ -2,37 +2,36 @@
 % Please edit documentation in R/pharma_complete.R
 \name{pharma_complete_12}
 \alias{pharma_complete_12}
-\title{Obtenir les pharmacies complètes pour une année donnée}
+\title{Obtenir les pharmacies complètes sur une période définie}
 \usage{
-pharma_complete_12(n = 0)
+pharma_complete_12(date_debut, date_fin, code_groupement = NULL)
 }
 \arguments{
-\item{n}{Entier (défaut = 0). Nombre d'années à reculer depuis l'année actuelle - 1.}
+\item{date_debut}{Entier. Date de début au format \code{YYYYMM} (ex : 202401).}
+
+\item{date_fin}{Entier. Date de fin au format \code{YYYYMM} (ex : 202412). Doit être ≥ à \code{date_debut}.}
+
+\item{code_groupement}{Entier optionnel. Code du groupement (\code{n_auto_adhgrp}). Par défaut : \code{NULL} (toutes les pharmacies).}
 }
 \value{
-Un data.frame contenant :
-\itemize{
-\item \code{n_auto_adhpha_global} : identifiant de la pharmacie
-\item \verb{CA xxxx} : le chiffre d'affaires pour l’année cible
-}
+Un \code{data.frame} listant les pharmacies complètes sur la période indiquée, avec leurs données consolidées.
 }
 \description{
-Cette fonction retourne les pharmacies considérées comme \strong{complètes} sur 12 mois,
-pour une année spécifique (par défaut l'année précédente), ainsi que leur chiffre d'affaires (CA).
+La fonction \code{pharma_complete_12()} retourne les pharmacies considérées comme \strong{complètes}
+sur une période donnée (définie par une date de début et une date de fin au format \code{YYYYMM}),
+ainsi que leurs indicateurs économiques principaux (CA HT, CA TTC, nombre de ventes, quantités vendues).
 }
 \details{
+Elle permet également de filtrer les résultats par un \strong{code groupement} (\code{n_auto_adhgrp}).
 \itemize{
-\item Si \code{n = 0}, retourne les données pour l’année en cours - 1.
-\item Si \code{n = 1}, retourne l’année en cours - 2, etc.
-\item Jusqu’à \code{n = 2} (au-delà, un message est renvoyé).
+\item Si aucun groupement n'est spécifié, la fonction retourne \strong{l’ensemble} des pharmacies complètes sur la période.
+\item Les noms des colonnes de sortie sont générés dynamiquement à partir des dates renseignées.
 }
-
-Le nom de la colonne du CA est généré dynamiquement (ex : "CA 2023").
 }
 \examples{
 \dontrun{
-pharma_complete_12()       # Pour l’année N-1
-pharma_complete_12(n = 1)  # Pour l’année N-2
+pharma_complete_12(202401, 202412) # Toutes les pharmacies complètes en 2024
+pharma_complete_12(202301, 202312, code_groupement = 411) # Uniquement le groupement 411
 }
 
 }

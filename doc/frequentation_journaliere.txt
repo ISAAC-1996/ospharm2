@@ -1,0 +1,37 @@
+
+##-------------Fonction frequentation_journaliere()-------------------
+
+Cette fonction calcule la fréquentation moyenne journalière d'une pharmacie (nombre moyen de clients par jour), sur une période personnalisée.
+
+##Usage
+
+frequentation_journaliere(n_auto, date_debut, date_fin)
+
+##Arguments
+
+- n_auto : Identifiant de la pharmacie (n_auto_adhpha_ecollect)
+- date_debut : Période de début au format YYYYMM (ex : 202401)
+- date_fin : Période de fin au format YYYYMM (ex : 202404)
+
+##Resultats
+
+Un data.frame avec :
+- n_auto : identifiant de la pharmacie
+- frequentation_moyenne_jour : fréquentation moyenne journalière
+
+##Exemples
+frequentation_journaliere(7782, 202401, 202404)
+
+##Requête SQL
+
+WITH ventes_par_jour AS (
+SELECT n_auto_adhpha_ecollect AS n_auto,
+  CONVERT(date, dateheure_ecollect) AS jour,
+  COUNT(DISTINCT n_auto_ecollect) AS nb_clients
+FROM v_el_collect_ospharm
+  WHERE periode BETWEEN 202405 AND 202504 AND n_auto_adhpha_ecollect = 7782
+  GROUP BY n_auto_adhpha_ecollect, CONVERT(date, dateheure_ecollect))
+SELECT n_auto,
+  ROUND(AVG(nb_clients), 1) AS [frequentation_moyenne_jour]
+FROM ventes_par_jour
+  GROUP BY n_auto
