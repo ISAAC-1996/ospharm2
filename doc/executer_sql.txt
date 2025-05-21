@@ -1,1 +1,21 @@
-aucune documentation trouvée pour executer_sql
+#---------- Fonction executer_sql() ----------------------
+
+Cette fonction permet d'exécuter des requêtes SQL directement dans R, en interrogeant la base de données connectée via le package ospharm2.
+
+##Usage
+
+executer_sql("REQUETE_SQL")
+
+- Remplacez "REQUETE_SQL" par votre requête SQL au format texte.
+- La requête doit être valide et adaptée à la base de données cible.
+- Les résultats sont automatiquement récupérés dans un data.frame.
+
+## Résultat
+
+Un data.frame contenant le résultat de la requête SQL exécutée.
+
+##Exemples
+
+executer_sql("SELECT TOP 10 * FROM os_artic")
+executer_sql("SELECT * FROM dbo.vuProdAdhpha WHERE dextinct_adhpha IS NULL")
+executer_sql("SELECT COUNT(*) AS nb FROM os_stat_global WHERE an_global = 2024")
