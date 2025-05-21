@@ -1,1 +1,33 @@
-fhfhggjgkggk
+#---------------honoraires_new_mission() -----------------------
+
+Cette fonction retourne un tableau croisé contenant le volume d'honoraires de nouvelles missions réalisées par pharmacie sur une période donnée.
+
+##Usage
+
+honoraires_new_mission(groupement = NULL, date_debut, date_fin)
+
+##Arguments
+- groupement : Entier (optionnel). Identifiant du groupement.
+- date_debut : Entier. Période de début au format YYYYMM (ex: 202401)
+- date_fin : Entier. Période de fin au format YYYYMM (ex: 202404)
+
+# Remarque
+Par défaut, elle retourne toutes les pharmacies actives. Si un groupement est précisé, le tableau est restreint à ce groupement.
+
+#Valeur
+Un tableau data.frame de type large (pivoté), une ligne par pharmacie.
+
+#exemple
+
+honoraires_new_mission(date_debut = 202401, date_fin = 202404)
+honoraires_new_mission(groupement = 411, date_debut = 202401, date_fin = 202404)
+
+##Requete SQL
+
+SELECT os_acteb2.acteB2, SUM(qt_vendu_B2) as Volume
+from os_acteb2
+left join dbo.os_stat_B2 on os_stat_B2.acteB2 = os_acteb2.acteb2
+where n_auto_adhpha_B2 in (select n_auto_adhpha from dbo.os_grp_adhpha where n_auto_adhgrp in (411))
+  and periode between 202405 and 202504
+and os_acteb2.acteB2 not in ('HD', 'HG', 'HC', 'HDA', 'HDE', 'HDR')
+group by os_acteb2.acteB2

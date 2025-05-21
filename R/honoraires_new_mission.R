@@ -1,4 +1,4 @@
-#' Honoraires des nouvelles missions par pharmacie
+#' honoraires des nouvelles missions par pharmacie
 #'
 #' Cette fonction retourne un tableau croisé contenant le volume d'honoraires
 #' de nouvelles missions réalisées par pharmacie sur une période donnée.
@@ -14,12 +14,12 @@
 #'
 #' @examples
 #' \dontrun{
-#' Honoraires_new_mission(date_debut = 202401, date_fin = 202404)
-#' Honoraires_new_mission(groupement = 411, date_debut = 202401, date_fin = 202404)
+#' honoraires_new_mission(date_debut = 202401, date_fin = 202404)
+#' honoraires_new_mission(groupement = 411, date_debut = 202401, date_fin = 202404)
 #' }
 #'
 #' @export
-Honoraires_new_mission <- function(groupement = NULL, date_debut, date_fin) {
+honoraires_new_mission <- function(groupement = NULL, date_debut, date_fin) {
   # clause conditionnelle pour le groupement
   filtre_groupement <- if (!is.null(groupement)) {
     sprintf("n_auto_adhpha_B2 IN (
