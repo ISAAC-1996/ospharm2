@@ -13,11 +13,10 @@
   missing <- required_packages[!sapply(required_packages, requireNamespace, quietly = TRUE)]
 
   if (length(missing) > 0) {
-    packageStartupMessage("Certains packages ne sont pas installés :")
-    packageStartupMessage("", paste(missing, collapse = ", "))
-    packageStartupMessage("Installez-les avec : install.packages(c(", paste(sprintf('"%s"', missing), collapse = ", "), "))")
+    packageStartupMessage(" Certains packages ne sont pas installés :")
+    packageStartupMessage(paste(missing, collapse = ", "))
+    packageStartupMessage("Installez-les avec :\ninstall.packages(c(", paste(sprintf('"%s"', missing), collapse = ", "), "))")
   } else {
-    invisible(lapply(required_packages, function(pkg) library(pkg, character.only = TRUE, quietly = TRUE)))
-    packageStartupMessage("Librairies automatiquement chargées : ", paste(required_packages, collapse = ", "))
+    packageStartupMessage("Tous les packages nécessaires sont installés.")
   }
 }
