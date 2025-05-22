@@ -4,14 +4,12 @@
 \alias{pharma_complete_12}
 \title{Obtenir les pharmacies complètes sur une période définie}
 \usage{
-pharma_complete_12(date_debut, date_fin, code_groupement = NULL)
+pharma_complete_12(date_debut, date_fin)
 }
 \arguments{
 \item{date_debut}{Entier. Date de début au format \code{YYYYMM} (ex : 202401).}
 
 \item{date_fin}{Entier. Date de fin au format \code{YYYYMM} (ex : 202412). Doit être ≥ à \code{date_debut}.}
-
-\item{code_groupement}{Entier optionnel. Code du groupement (\code{n_auto_adhgrp}). Par défaut : \code{NULL} (toutes les pharmacies).}
 }
 \value{
 Un \code{data.frame} listant les pharmacies complètes sur la période indiquée, avec leurs données consolidées.
@@ -22,16 +20,13 @@ sur une période donnée (définie par une date de début et une date de fin au 
 ainsi que leurs indicateurs économiques principaux (CA HT, CA TTC, nombre de ventes, quantités vendues).
 }
 \details{
-Elle permet également de filtrer les résultats par un \strong{code groupement} (\code{n_auto_adhgrp}).
 \itemize{
-\item Si aucun groupement n'est spécifié, la fonction retourne \strong{l’ensemble} des pharmacies complètes sur la période.
-\item Les noms des colonnes de sortie sont générés dynamiquement à partir des dates renseignées.
+\item Les noms des colonnes de sortie sont fixes (non dynamiques).
 }
 }
 \examples{
 \dontrun{
-pharma_complete_12(202401, 202412) # Toutes les pharmacies complètes en 2024
-pharma_complete_12(202301, 202312, code_groupement = 411) # Uniquement le groupement 411
+pharma_complete_12(202401, 202412)
 }
 
 }

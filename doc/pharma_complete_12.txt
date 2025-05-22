@@ -5,18 +5,14 @@ La fonction pharma_complete_12() retourne les pharmacies considérées comme com
 
 ##Usage
 
-pharma_complete_12(date_debut, date_fin, code_groupement = NULL)
+pharma_complete_12(date_debut, date_fin)
 
 ##Arguments
 
 - date_debut : 	Entier. Date de début au format YYYYMM (ex : 202401).
 - date_fin : Entier. Date de fin au format YYYYMM (ex : 202412). Doit être ≥ à date_debut.
-- code_groupement	 : Entier optionnel. Code du groupement (n_auto_adhgrp). Par défaut : NULL (toutes les pharmacies).
 
 ##Remarque
-
-- Elle permet également de filtrer les résultats par un code groupement (n_auto_adhgrp).
-- Si aucun groupement n'est spécifié, la fonction retourne l’ensemble des pharmacies complètes sur la période.
 - Les noms des colonnes de sortie sont générés dynamiquement à partir des dates renseignées.
 
 ##Valeur
@@ -26,7 +22,6 @@ Un data.frame listant les pharmacies complètes sur la période indiquée, avec 
 ##Examples
 
 pharma_complete_12(202401, 202412) # Toutes les pharmacies complètes en 2024
-pharma_complete_12(202301, 202312, code_groupement = 411) # Uniquement le groupement 411
 
 ## Requete SQL
  SELECT n_auto_adhpha_global as n_auto_adhpha,  nom_syndicat,
@@ -37,13 +32,11 @@ sum(nb_vte_global) as [Nombre de vente de 202401 - 202412],
 sum(qt_vendu_global) as [Quantité vendu de 202401 - 202412]
  FROM dbo.os_stat_global
         left join dbo.vuProdAdhpha on n_auto_adhpha_global = n_auto_adhpha
-        left join dbo.os_grp_adhpha a on n_auto_adhpha_global = a.n_auto_adhpha
-        left join dbo.os_adhgrp b on a.n_auto_adhgrp = b.n_auto_adhgrp
         left join dbo.os_syndicat on syndic_adhpha = n_auto_syndicat
     WHERE dextinct_adhpha is null and n_auto_adhpha_global NOT IN (
         SELECT n_auto_adhpha
         FROM dbo.os_completudepha
         WHERE periode_completudepha BETWEEN 202401 AND 202412
         AND moisok_completudepha IN (0, 8))
-    AND periode BETWEEN 202401 AND 202412 --and a.n_auto_adhgrp = 411
+    AND periode BETWEEN 202401 AND 202412
     GROUP BY n_auto_adhpha_global, nom_syndicat, cip, rs_adhpha, nom_ville, cp_ville, ssii_adhpha
