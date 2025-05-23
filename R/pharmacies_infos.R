@@ -39,6 +39,7 @@ pharmacies_infos <- function(groupement = NULL) {
   requete <- sprintf("
     SELECT n_auto_adhpha,
            rs_adhpha AS PHARMACIE,
+           nom_syndicat,
            cip AS CIP,
            nom_region,
            nom_ville,
@@ -47,6 +48,7 @@ pharmacies_infos <- function(groupement = NULL) {
     FROM dbo.vuProdAdhpha
     LEFT JOIN dbo.os_region ON region_adhpha = n_auto_region
     LEFT JOIN ospharea_adherents ON finess_adhpha = finess
+    left join os_syndicat on syndic_adhpha = n_auto_syndicat
     WHERE dextinct_adhpha IS NULL and n_auto_adhpha >1
     %s
   ", condition_groupement)
