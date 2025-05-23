@@ -1,0 +1,61 @@
+
+#------------- Fonction potentiel_achat() ----------------------
+
+Cette fonction retourne une table du potentiel d'achat et de la remise pondérée par pharmacie, cip et ville, pour un ou plusieurs fournisseurs, avec la possibilité de filtrer par groupement et période.
+Les colonnes sont dynamiquement nommées en fonction des noms des fournisseurs, en suivant le format :
+- POTENTIEL <FOURNISSEUR> n°1 en PFHT
+- REMISE PONDEREE <FOURNISSEUR>
+
+## Usage
+
+potentiel_achat(
+  n_auto_adhgrp = NULL,
+  date_debut,
+  date_fin,
+  n_auto_adhfour_vect
+)
+
+## Arguments
+
+- n_auto_adhgrp : Entier (optionnel). Identifiant du groupement de pharmacies. Si NULL, considère toutes les pharmacies.
+- date_debut : Entier. Période de début (format YYYYMM, ex : 202401).
+- date_fin : Entier. Période de fin (format YYYYMM, ex : 202412).
+- n_auto_adhfour_vect : Vecteur d'entiers. Identifiants des fournisseurs à inclure (ex : c(402737, 401884)).
+
+## Résultat
+
+Un data.frame contenant :
+- Pharmacie
+- cip
+- ville
+- POTENTIEL <NOM FOURNISSEUR> n°1 en PFHT
+- REMISE PONDEREE <NOM FOURNISSEUR>
+
+## Exemples
+
+### Potentiel pour un groupement spécifique
+potentiel_achat(n_auto_adhgrp = 177, date_debut = 202401, date_fin = 202412, n_auto_adhfour_vect = c(402737, 401884))
+
+## Requête SQL
+select rs_adhpha as 'Pharmacie',
+       cip, nom_ville as ville, nom_adhfour as manufacturer_name,
+       ct2.n_auto_adhfour,
+       sum(prix) as price,
+       sum(prix * (remise_max*100)) / sum(prix)  as max_discount
+from (select distinct(os_labogener_artic.lien2), n_auto_adhpha_artic, sum(qt_vendu_artic*pfht) as prix
+                   from os_stat_artic
+                   inner join os_labogener_artic on os_stat_artic.n_auto_artic_artic=n_auto_artic
+                   where n_auto_adhpha_artic in (select n_auto_adhpha from dbo.os_grp_adhpha where n_auto_adhgrp = 177)
+                   and os_labogener_artic.type_artic is null
+                   and periode between 202401 and 202412
+                   group by os_labogener_artic.lien2, n_auto_adhpha_artic) as ct1
+                   inner join (select n_auto_adhfour, lien2, (max(remise)/100) as remise , (max(remise_max)/100) as remise_max, (max(remise_max2)/100) as remise_max2
+                   from os_labogener_artic
+                         where n_auto_adhfour in (402737,  401884) and date_fin_application>getdate()
+                     group by lien2, n_auto_adhfour ) as ct2
+on ct2.lien2 = ct1.lien2 inner join os_adhfour on os_adhfour.n_auto_adhfour = ct2.n_auto_adhfour
+inner join dbo.vuProdAdhpha on n_auto_adhpha_artic = n_auto_adhpha
+where dextinct_adhpha is null
+group by rs_adhpha, cip, nom_ville, ct2.n_auto_adhfour, nom_adhfour
+order by nom_adhfour
+

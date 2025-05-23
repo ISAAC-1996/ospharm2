@@ -1,0 +1,56 @@
+_A_r_i_t_h_m_e_t_i_c _M_e_a_n
+
+_D_e_s_c_r_i_p_t_i_o_n:
+
+     Generic function for the (trimmed) arithmetic mean.
+
+_U_s_a_g_e:
+
+     mean(x, ...)
+     
+     ## Default S3 method:
+     mean(x, trim = 0, na.rm = FALSE, ...)
+     
+_A_r_g_u_m_e_n_t_s:
+
+       x: An R object.  Currently there are methods for numeric/logical
+          vectors and date, date-time and time interval objects.
+          Complex vectors are allowed for ‘trim = 0’, only.
+
+    trim: the fraction (0 to 0.5) of observations to be trimmed from
+          each end of ‘x’ before the mean is computed.  Values of trim
+          outside that range are taken as the nearest endpoint.
+
+   na.rm: a logical evaluating to ‘TRUE’ or ‘FALSE’ indicating whether
+          ‘NA’ values should be stripped before the computation
+          proceeds.
+
+     ...: further arguments passed to or from other methods.
+
+_V_a_l_u_e:
+
+     If ‘trim’ is zero (the default), the arithmetic mean of the values
+     in ‘x’ is computed, as a numeric or complex vector of length one.
+     If ‘x’ is not logical (coerced to numeric), numeric (including
+     integer) or complex, ‘NA_real_’ is returned, with a warning.
+
+     If ‘trim’ is non-zero, a symmetrically trimmed mean is computed
+     with a fraction of ‘trim’ observations deleted from each end
+     before the mean is computed.
+
+_R_e_f_e_r_e_n_c_e_s:
+
+     Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988) _The New S
+     Language_.  Wadsworth & Brooks/Cole.
+
+_S_e_e _A_l_s_o:
+
+     ‘weighted.mean’, ‘mean.POSIXct’, ‘colMeans’ for row and column
+     means.
+
+_E_x_a_m_p_l_e_s:
+
+     x <- c(0:10, 50)
+     xm <- mean(x)
+     c(xm, mean(x, trim = 0.10))
+     
