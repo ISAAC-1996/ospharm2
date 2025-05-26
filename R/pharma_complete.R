@@ -30,6 +30,7 @@ pharma_complete_12 <- function(date_debut, date_fin) {
     SELECT
       n_auto_adhpha_global AS n_auto_adhpha,
       nom_syndicat,
+      nom_typhie,
       cip,
       rs_adhpha,
       nom_ville,
@@ -42,6 +43,7 @@ pharma_complete_12 <- function(date_debut, date_fin) {
     FROM dbo.os_stat_global a
     LEFT JOIN dbo.vuProdAdhpha b ON n_auto_adhpha_global = n_auto_adhpha
     LEFT JOIN dbo.os_syndicat ON syndic_adhpha = n_auto_syndicat
+    LEFT JOIN dbo.os_typhie on b.typhie_adhpha = n_auto_typhie
     WHERE dextinct_adhpha IS NULL
       AND n_auto_adhpha_global NOT IN (
         SELECT n_auto_adhpha
@@ -51,7 +53,7 @@ pharma_complete_12 <- function(date_debut, date_fin) {
       )
       AND periode BETWEEN %d AND %d
     GROUP BY
-      n_auto_adhpha_global, cip, rs_adhpha, nom_ville, cp_ville, ssii_adhpha, nom_syndicat
+      n_auto_adhpha_global, nom_typhie, cip, rs_adhpha, nom_ville, cp_ville, ssii_adhpha, nom_syndicat
   ",
                      date_debut, date_fin,
                      date_debut, date_fin
