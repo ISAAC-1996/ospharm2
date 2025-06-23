@@ -1,0 +1,21 @@
+-------- Fonction ean() ----------------------------
+Cette fonction permet de récupérer les codes EAN des articles présents dans la base de données, avec leur identifiant technique.
+
+#Usage
+ ean()
+- Aucune option à renseigner.
+- La requête interroge directement la table os_ean.
+- Le résultat s'affiche automatiquement dans la visionneuse R (View) et est renvoyé sous forme de data.frame.
+
+
+#Requête SQL utilisée
+SELECT n_auto_artic_ean AS n_auto_artic, code_ean FROM os_ean
+
+
+#Résultat
+Un data.frame contenant deux colonnes :
+ - n_auto_artic : identifiant de l’article
+ - code_ean : code EAN associé
+
+#Exemple
+	ean()

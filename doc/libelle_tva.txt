@@ -1,0 +1,20 @@
+-------- Fonction libelle_tva() --------
+Cette fonction récupère les types de taux de TVA définis dans la base, avec ou sans filtrage sur les lignes actives.
+
+#Usage
+	- libelle_tva(syndic_only = TRUE)
+	TRUE : retourne uniquement les lignes actives (syndic == 1)
+	FALSE : retourne toutes les lignes disponibles dans la table
+
+#Requête SQL utilisée
+
+	Un data.frame avec les colonnes suivantes :
+	- code_tva : identifiant du taux de TVA
+	- lib_tva : libellé du taux (ex : « TVA à 10.0% »)
+	- taux_tva : valeur numérique du taux
+	- (si syndic_only = FALSE, on a aussi la colonne syndic)
+#Exemples
+libelle_tva()         # Taux actifs uniquement
+libelle_tva(FALSE)    # Tous les taux, y compris inactifs
+
+

@@ -1,0 +1,21 @@
+-------- Fonction fournisseurs() --------
+Cette fonction récupère la liste des fournisseurs présents dans la base.
+
+#Usage
+fournisseurs()
+ - La fonction ne prend aucun paramètre.
+ - Elle interroge directement la base et renvoie tous les fournisseurs enregistrés.
+
+#Requête SQL utilisée
+
+select n_auto_adhfour, nom_adhfour, cp_adhfour, ville_adhfour from os_adhfour
+
+#Résultat
+Un data.frame avec les colonnes suivantes :
+ - n_auto_adhfour : identifiant interne du fournisseur
+ - nom_adhfour : nom du fournisseur
+ - cp_adhfour : code postal
+ - ville_adhfour : ville du fournisseur
+
+#Exemple
+fournisseurs()

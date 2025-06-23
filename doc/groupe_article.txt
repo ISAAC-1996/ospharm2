@@ -1,0 +1,33 @@
+-------- Fonction groupe_article() --------
+Cette fonction récupère les différents groupes d’articles disponibles dans la base, comme les Princeps, Génériques, Biosimilaires, etc.
+
+#Usage
+  groupe_article()
+ - La requête est exécutée directement et retourne la liste des types d’articles normalisés. 
+
+#Requête SQL utilisée
+SELECT DISTINCT
+  type_artic,
+  CASE
+    WHEN type_artic = 'P' THEN 'Princeps'
+    WHEN type_artic = 'A' THEN 'Hors liste ANSM'
+    WHEN type_artic = 'R' THEN 'Bioréferent'
+    WHEN type_artic = 'B' THEN 'Biosimilaire'
+    WHEN type_artic = 'H' THEN 'Hybride'
+    ELSE 'Génerique'
+  END AS Groupe,
+  CASE
+    WHEN type_artic IN ('R', 'B', 'H') THEN 'Biosimilaires'
+    ELSE 'Génerique'
+  END AS type
+FROM os_labogener_artic
+
+#Résultat
+ Un data.frame avec les colonnes suivantes :
+ - type_artic : code d'origine dans la base
+ - Groupe : libellé lisible (ex : « Princeps », « Biosimilaire », etc.)
+ - type : catégorie générale (« Générique » ou « Biosimilaires »)
+
+#Exemple
+groupe_article()
+

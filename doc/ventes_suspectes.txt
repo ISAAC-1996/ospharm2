@@ -1,0 +1,28 @@
+#---------- Fonction get_ventes_suspectes() ----------------------
+
+Cette fonction identifie les ventes suspectes dans les pharmacies 
+pour une période donnée, en se basant sur un seuil de quantité vendue.
+
+## Usage
+
+get_ventes_suspectes(periode, seuil_suspect = 999)
+- periode : entier au format YYYYMM (ex : 202505)
+-> Obligatoire. Spécifie le mois à analyser.
+- seuil_suspect : entier (optionnel). Quantité à partir de laquelle 
+une vente est considérée comme suspecte. Valeur par défaut : 999.
+
+## Résultat
+
+Un data.frame avec les colonnes :
+  - dateheure_ecollect : date et heure de la vente
+- n_auto_adhpha : identifiant de la pharmacie
+- LGO : logiciel de gestion officinale (SSII)
+- typ_vte_ecollect : type de vente
+- n_auto_artic : identifiant de l’article
+- nom_artic : nom de l’article vendu
+- quantite_vendue : quantité vendue
+
+## Exemples
+
+get_ventes_suspectes(202505)             # Ventes suspectes de mai 2025
+get_ventes_suspectes(202504, 500)        # Seuil personnalisé pour avril 2025
