@@ -1,0 +1,32 @@
+-------- Fonction libelle_article() ----------------------------
+Cette fonction permet de récupérer les informations principales d’un article à partir de la base de données :
+ identifiant, famille, marque, type, TVA, nom, et fournisseur.
+
+#Usage
+ libelle_article()
+- Aucune option à renseigner.
+- La requête interroge directement les tables os_classif, os_artic et os_labogener_artic.
+- Le résultat s’affiche automatiquement dans la visionneuse R (View) et est renvoyé sous forme de data.frame.
+
+
+#Requête SQL utilisée
+select a.n_auto_artic, n_auto_famille, lib_famille, marque, c.type_artic, b.tva_artic, nom_artic, adhfour
+                            from os_classif a
+                            left join os_artic b on a.n_auto_artic = b.n_auto_artic
+                            left join os_labogener_artic c on a.n_auto_artic = c.n_auto_artic
+
+
+#Résultat
+Un data.frame contenant les colonnes suivantes :
+ - n_auto_artic : identifiant de l’article
+ - n_auto_famille : identifiant de la famille du produit
+ - lib_famille : libellé de la famille
+ - marque : marque commerciale
+ - type_artic : type d’article (Princeps, Générique, etc.)
+ - tva_artic : taux de TVA appliqué
+ - nom_artic : nom de l’article
+ - adhfour : code du fournisseur
+
+#Exemple
+
+libelle_article()

@@ -1,11 +1,11 @@
 
-#-------------------pharma_complete_12() --------------------------------
+#-------------------pharma_complete() --------------------------------
 
-La fonction pharma_complete_12() retourne les pharmacies considérées comme complètes sur une période donnée (définie par une date de début et une date de fin au format YYYYMM), ainsi que leurs indicateurs économiques principaux (CA HT, CA TTC, nombre de ventes, quantités vendues).
+La fonction pharma_complete() retourne les pharmacies considérées comme complètes sur une période donnée (définie par une date de début et une date de fin au format YYYYMM), ainsi que leurs indicateurs économiques principaux (CA HT, CA TTC, nombre de ventes, quantités vendues).
 
 ##Usage
 
-pharma_complete_12(date_debut, date_fin)
+pharma_complete(date_debut, date_fin)
 
 ##Arguments
 
@@ -21,7 +21,7 @@ Un data.frame listant les pharmacies complètes sur la période indiquée, avec 
 
 ##Examples
 
-pharma_complete_12(202401, 202412) # Toutes les pharmacies complètes en 2024
+pharma_complete(202401, 202412) # Toutes les pharmacies complètes en 2024
 
 ## Requete SQL
  SELECT n_auto_adhpha_global as n_auto_adhpha,  nom_syndicat,

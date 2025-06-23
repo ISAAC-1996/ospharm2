@@ -1,6 +1,6 @@
 #' Obtenir les pharmacies complètes sur une période définie
 #'
-#' La fonction `pharma_complete_12()` retourne les pharmacies considérées comme **complètes**
+#' La fonction `pharma_complete()` retourne les pharmacies considérées comme **complètes**
 #' sur une période donnée (définie par une date de début et une date de fin au format `YYYYMM`),
 #' ainsi que leurs indicateurs économiques principaux (CA HT, CA TTC, nombre de ventes, quantités vendues).
 #'
@@ -13,11 +13,11 @@
 #'
 #' @examples
 #' \dontrun{
-#' pharma_complete_12(202401, 202412)
+#' pharma_complete(202401, 202412)
 #' }
 #'
 #' @export
-pharma_complete_12 <- function(date_debut, date_fin) {
+pharma_complete <- function(date_debut, date_fin) {
   if (missing(date_debut) || missing(date_fin)) {
     stop("Merci de spécifier une date de début et une date de fin au format YYYYMM.")
   }

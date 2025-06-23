@@ -1,0 +1,35 @@
+-------- Fonction statistique_type_article() -------------------------
+
+Cette fonction retourne les statistiques de vente par type d’article
+(Princeps, Générique, Biosimilaire, etc.), en précisant si l’article est
+substituable ou non, pour une période donnée.
+
+#Usage
+
+statistique_type_article(date_debut, date_fin)
+ - date_debut : entier au format AAAAMM (ex : 202306)
+ - date_fin : entier au format AAAAMM (ex : 202505)
+
+#Résultat
+
+Un data.frame avec les colonnes suivantes :
+ - periode : période de référence (AAAAMM)
+ - type_artic : type de l’article (ex : Princeps, Biosimilaire...)
+ - Subtitution : « Substituable » ou « Non substituable »
+ - CA_HT : chiffre d'affaires HT cumulé
+ - qte_vendu : quantité totale vendue
+
+# Requête
+select periode, type_artic, case when  substitution = 0 then 'Non substituable' else 'Substituable' end as Subtitution, round(sum(ca_ht_artic), 2) as CA_HT,
+ sum(qt_vendu_artic) as qte_vendu  from os_labogener_artic
+                      left join os_stat_artic on n_auto_artic = n_auto_artic_artic
+                      left join dbo.os_gener a on n_auto_artic  = n_auto_artic_gener
+                      left join os_grpgener_artic b on a.groupe_gener = b.groupe_gener
+                      where periode between 202306 and 202505
+                      and n_auto_adhpha_artic not in (select n_auto_adhpha from dbo.os_completudepha
+                            where moisok_completudepha in (0, 8) and periode_completudepha between 202306 and 202505)
+                      group by periode, type_artic, substitution
+
+#Exemple 
+
+statistique_type_article(202306, 202505)

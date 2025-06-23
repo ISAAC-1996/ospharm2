@@ -1,0 +1,34 @@
+ -------- Fonction statistique_article() --------
+
+ Cette fonction calcule les statistiques de ventes d'un ou plusieurs articles
+ (chiffre d'affaires HT, prix d'achat cumulé, quantité vendue) sur une période.
+
+#Usage
+
+ statistique_article(articles, date_debut, date_fin)
+
+- `articles` : vecteur d'identifiants article (`n_auto_artic_artic`).
+- `date_debut` : début de période au format *AAAAMM* (ex : `202306`).
+ - `date_fin`   : fin de période au même format (ex : `202505`).
+
+# Requête SQL utilisée (générée dynamiquement)
+select periode, n_auto_adhpha_artic, n_auto_artic_artic, round(sum(ca_ht_artic), 2) as CA_HT, round(sum(px_achat_artic),2) as px_achat, sum(qt_vendu_artic) as qte_vendu from os_stat_artic where periode between 202306 and 202505 and n_auto_artic_artic in (344734)
+and n_auto_adhpha_artic not in (select n_auto_adhpha from dbo.os_completudepha
+                            where moisok_completudepha in (0, 8) and periode_completudepha between 202306 and 202505)
+                     group by periode, n_auto_adhpha_artic, n_auto_artic_artic
+
+
+# Résultat
+
+ Un `data.frame` avec :
+ - `periode`               : période AAAAMM
+- `n_auto_adhpha_artic`   : identifiant pharmacie
+- `n_auto_artic_artic`    : identifiant article
+ - `CA_HT`                 : chiffre d'affaires hors taxes
+ - `px_achat`              : prix d'achat cumulé
+ - `qte_vendu`             : quantité vendue
+
+# Exemple
+
+ stat <- statistique_article(c(344734, 81234), 202306, 202505)
+

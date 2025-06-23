@@ -1,0 +1,30 @@
+#---------------------- statistique_famille() ----------------------
+
+La fonction statistique_famille() retourne les statistiques de vente (CA HT, quantité vendue) des familles de produits, pour une période définie entre une date de début et une date de fin (au format AAAAMM). Les pharmacies incomplètes sont automatiquement exclues.
+
+##Usage
+
+statistique_famille(date_debut, date_fin)
+
+##Arguments
+
+ - date_debut : Entier. Date de début au format AAAAMM (ex : 202306)
+ - date_fin : Entier. Date de fin au format AAAAMM (ex : 202505). Doit être ≥ date_debut
+
+##Valeur
+
+Un data.frame listant les ventes par famille et par période, avec deux indicateurs : 
+chiffre d’affaires HT et quantité vendue.
+
+"Requête
+select periode, n_auto_famille, round(sum(ca_ht_artic), 2) as CA_HT, sum(qt_vendu_artic) as qte_vendu
+                      from os_classif
+                      left join os_stat_artic on n_auto_artic = n_auto_artic_artic
+                      where periode between 202306 and 202505
+                      and n_auto_adhpha_artic not in (select n_auto_adhpha from dbo.os_completudepha
+                            where moisok_completudepha in (0, 8) and periode_completudepha between 202306 and 202505)
+                      group by periode, n_auto_famille
+
+
+# exemple :
+statistique_famille(202306, 202505)  # Statistiques par famille de juin 2023 à mai 2025
