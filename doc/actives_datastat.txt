@@ -1,0 +1,41 @@
+# -------- Fonction actives_datastat() --------
+
+Cette fonction retourne les pharmacies nouvellement actives (adhérentes) au service DataStat,
+jour par jour, depuis le 01/01/2002, ainsi que leur cumul.
+
+##Usage
+
+actives_datastat()
+→ Retourne la liste des nouvelles adhésions journalières et leur cumul global.
+
+##Résultat
+
+Un `data.frame` avec les colonnes suivantes :
+- `n_auto_adhpha` : identifiant de la pharmacie (peut être NA s'il n'y a pas eu d'arrivée ce jour-là)
+- `date_complete` : date d’adhésion au format AAAA/MM/JJ
+- `Nb_Actif_journalier` : nombre de nouvelles adhésions le jour concerné
+- `somme_cumulative_Actif` : nombre total cumulé depuis le début
+
+#Requete
+WITH Liste_Jours AS (
+  SELECT CAST('2002-01-01' AS DATE) AS date_adhesion
+  UNION ALL
+  SELECT DATEADD(DAY, 1, date_adhesion)
+  FROM Liste_Jours
+  WHERE date_adhesion < CAST(GETDATE() AS DATE)
+  )
+  SELECT a.n_auto_adhpha, FORMAT(Liste_Jours.date_adhesion, 'yyyy/MM/dd') AS date_complete,
+  COALESCE(COUNT(a.n_auto_adhpha), 0) AS Nb_Actif_journalier,
+  SUM(COALESCE(COUNT(a.n_auto_adhpha), 0)) OVER (ORDER BY Liste_Jours.date_adhesion) AS somme_cumulative_Actif
+  FROM Liste_Jours
+  LEFT JOIN [OSP_PROD].[dbo].os_adhpha a 
+  ON CAST(a.dinscript_adhpha AS DATE) = Liste_Jours.date_adhesion
+  WHERE a.dextinct_adhpha IS NULL
+  GROUP BY a.n_auto_adhpha, Liste_Jours.date_adhesion 
+  ORDER BY Liste_Jours.date_adhesion
+  OPTION (MAXRECURSION 0)
+
+
+##Exemple
+
+actives_datastat()
