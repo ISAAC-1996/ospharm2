@@ -28,6 +28,7 @@ pharma_complete <- function(date_debut, date_fin) {
 
   requete <- sprintf("
     SELECT
+      periode,
       n_auto_adhpha_global AS n_auto_adhpha,
       nom_syndicat,
       nom_typhie,
@@ -52,8 +53,7 @@ pharma_complete <- function(date_debut, date_fin) {
           AND moisok_completudepha IN (0, 8)
       )
       AND periode BETWEEN %d AND %d
-    GROUP BY
-      n_auto_adhpha_global, nom_typhie, cip, rs_adhpha, nom_ville, cp_ville, ssii_adhpha, nom_syndicat
+    GROUP BY periode, n_auto_adhpha_global, nom_typhie, cip, rs_adhpha, nom_ville, cp_ville, ssii_adhpha, nom_syndicat
   ",
                      date_debut, date_fin,
                      date_debut, date_fin
