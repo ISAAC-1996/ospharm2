@@ -1,3 +1,5 @@
+^renv$
+^renv\.lock$
 ^ospharm2\.Rproj$
 ^\.Rproj\.user$
 ^README\.Rmd$
