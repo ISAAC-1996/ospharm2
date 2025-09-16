@@ -1,0 +1,29 @@
+# -------- Fonction periode_window() --------
+
+Cette fonction retourne une table contenant les périodes au format AAAAMM ainsi que le nom du mois correspondant.
+Elle peut fonctionner soit avec un nombre de mois en arrière à partir du mois précédent, soit avec une période précise.
+
+##Usage
+
+- periode_window(n = 5)
+  Retourne les 5 derniers mois à partir du mois précédent.
+
+- periode_window(date_debut = 202301, date_fin = 202306)
+ Retourne les périodes comprises entre janvier et juin 2023.
+
+##Paramètres
+
+- `n` : entier. Nombre de mois à retourner en arrière à partir du mois précédent (prioritaire si renseigné).
+- `date_debut` : entier au format AAAAMM. Début de période (si `n` n'est pas utilisé).
+- `date_fin` : entier au format AAAAMM. Fin de période (si `n` n'est pas utilisé).
+
+##Résultat
+
+Un `data.frame` avec les colonnes :
+- `Periode` : période au format AAAAMM
+- `Mois` : nom du mois en français
+
+##Exemples
+
+periode_window(5) # Les 5 mois précédents
+periode_window(date_debut = 202301, date_fin = 202306)   # Janvier à Juin 2023

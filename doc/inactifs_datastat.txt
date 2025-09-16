@@ -1,0 +1,42 @@
+# -------- Fonction inactifs_datastat() --------
+
+Cette fonction retourne les pharmacies devenues inactives (désactivées) du service DataStat,
+jour par jour, depuis le 01/01/2002, ainsi que leur cumul total dans le temps.
+
+##Usage
+
+inactifs_datastat()
+→ Retourne la liste des pharmacies sorties du service, avec cumul global quotidien.
+
+##Résultat
+
+Un `data.frame` avec les colonnes suivantes :
+- `n_auto_adhpha` : identifiant de la pharmacie (NA si aucune inactivation ce jour-là)
+- `date_complete` : date de sortie au format AAAA/MM/JJ
+- `Nb_Inactif_journalier` : nombre de pharmacies rendues inactives le jour concerné
+- `somme_cumulative_Inactif` : nombre total cumulé de sorties depuis le début
+
+## Requête
+WITH Liste_Jours AS (
+  SELECT CAST('2002-01-01' AS DATE) AS date_adhesion
+  UNION ALL
+  SELECT DATEADD(DAY, 1, date_adhesion)
+  FROM Liste_Jours
+  WHERE date_adhesion < CAST(GETDATE() AS DATE)
+)
+SELECT a.n_auto_adhpha,
+  FORMAT(Liste_Jours.date_adhesion, 'yyyy/MM/dd') AS date_complete,
+  COALESCE(COUNT(a.n_auto_adhpha), 0) AS Nb_Inactif_journalier,
+  SUM(COALESCE(COUNT(a.n_auto_adhpha), 0)) OVER (ORDER BY Liste_Jours.date_adhesion) AS somme_cumulative_Inactif
+FROM Liste_Jours
+LEFT JOIN [OSP_PROD].[dbo].os_adhpha a 
+  ON CAST(a.dextinct_adhpha AS DATE) = Liste_Jours.date_adhesion
+  AND a.dextinct_adhpha IS NOT NULL
+GROUP BY a.n_auto_adhpha, Liste_Jours.date_adhesion 
+ORDER BY Liste_Jours.date_adhesion
+OPTION (MAXRECURSION 0)
+
+
+##Exemple
+
+inactifs_datastat()

@@ -1,0 +1,22 @@
+-------- Fonction groupement() ----------------------------
+Cette fonction permet de récupérer les groupements auxquels sont rattachées les pharmacies présentes dans la base de données.
+
+#Usage
+ groupement()
+ - Aucune option à renseigner.
+ - La requête interroge directement les tables os_grp_adhpha et os_adhgrp.
+ - Le résultat est renvoyé sous forme de data.frame.
+
+#Requête SQL utilisée
+SELECT n_auto_adhpha, a.n_auto_adhgrp, b.nom_adhgrp  
+FROM dbo.os_grp_adhpha a  
+LEFT JOIN dbo.os_adhgrp b ON a.n_auto_adhgrp = b.n_auto_adhgrp
+
+#Résultat
+Un data.frame contenant les colonnes suivantes :
+ - n_auto_adhpha : identifiant de la pharmacie
+ - n_auto_adhgrp : identifiant du groupement
+ - nom_adhgrp : nom du groupement
+
+#Exemple
+groupement()
