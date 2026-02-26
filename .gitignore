@@ -1,6 +1,24 @@
+
+# --- R / RStudio ---
 .Rproj.user
 .Rhistory
 .Rdata
+.Ruserdata
+
+# --- Auth / cache ---
 .httr-oauth
+
+# --- OS files ---
 .DS_Store
+Thumbs.db
+
+# --- Quarto / reports ---
 .quarto
+
+# --- Outputs / artefacts locaux ---
+output/
+Output/
+*.html
+
+# --- Excel temporaires ---
+~$*.xlsx
